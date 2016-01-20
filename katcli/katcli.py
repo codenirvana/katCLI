@@ -35,7 +35,8 @@ def print_data(data):
         click.secho('%s' % leech, fg=colors().LEECH)
 
 def search_basic():
-    pass
+    search = click.prompt('Enter Search Query')
+    print( ktorrent.search(search=search) )
 
 def search_adv():
     pass
@@ -57,9 +58,9 @@ def main(search, top, adv):
     if search and top:
         print("Choose only one function")
     elif search:
-        search_basic if adv else search_adv
+        search_adv() if adv else search_basic()
     elif top:
-        top_basic if adv else top_adv
+        top_adv if adv else top_basic
     else:
        print("Function argument missing")
 
