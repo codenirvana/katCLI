@@ -34,19 +34,33 @@ def print_data(data):
         click.secho('     %-7s' % seed, nl=False, fg=colors().SEED)
         click.secho('%s' % leech, fg=colors().LEECH)
 
+def search_basic():
+    pass
 
-@click.command()
-@click.option('-c', '--cat', 'category', default='all', help='Torrent Category')
-@click.option('-f', '--field', 'field', default='seed', help='Select field to sort')
-@click.option('-s', '--sort', 'sorder', default='desc', help='Select Sorting Order')
-@click.option('-p', '--page', 'page', default='1', help='Page')
-def main(category, field, sorder, page):
-    click.secho("Search For: ", nl=False, fg='white', bold=True)
-    search = input()
-    #try:
-    data = ktorrent.search(search=search, category=category, field=field, sorder=sorder, page=int(page))
-    print(data)
-    #except:
-        #print("Couldn't retrieve data")
+def search_adv():
+    pass
+
+def top_basic():
+    pass
+
+def top_adv():
+    pass
+
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+
+@click.command(context_settings=CONTEXT_SETTINGS)
+@click.option('-s', '--search', is_flag=True, help='Search Torrent')
+@click.option('-t', '--top', is_flag=True, help='Top Torrent')
+@click.option('-a', '--adv', is_flag=True, help='Advance Options')
+def main(search, top, adv):
+    """katCLI"""
+    if search and top:
+        print("Choose only one function")
+    elif search:
+        search_basic if adv else search_adv
+    elif top:
+        top_basic if adv else top_adv
+    else:
+       print("Function argument missing")
 
 if __name__ == "__main__": main()
