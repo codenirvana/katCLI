@@ -1,4 +1,4 @@
-import click, __future__
+import click, ktorrent
 
 def colors():
   enums = dict(
@@ -43,10 +43,10 @@ def print_data(data):
 def main(category, field, sorder, page):
     click.secho("Search For: ", nl=False, fg='white', bold=True)
     search = input()
-    try:
-        data = get_data(search=search, category=category, field=field, sorder=sorder, page=page)
-        print_data(data)
-    except:
-        print("Error connecting to inrernet")
+    #try:
+    data = ktorrent.search(search=search, category=category, field=field, sorder=sorder, page=int(page))
+    print(data)
+    #except:
+        #print("Couldn't retrieve data")
 
 if __name__ == "__main__": main()
