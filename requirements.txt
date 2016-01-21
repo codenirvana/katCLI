@@ -1,2 +1,2 @@
 click==6.2
-ktorrent==0.4.0
+ktorrent==0.4.3

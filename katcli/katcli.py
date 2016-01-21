@@ -1,4 +1,4 @@
-import click, ktorrent
+import click, ktorrent, json
 
 def colors():
   enums = dict(
@@ -14,12 +14,13 @@ def colors():
 def cap(s, l):
     return s if len(s)<=l else s[0:l-3]+'...'
 
-def print_data(data):
-    count = 0
+def print_data(raw_data):
+    torrents = raw_data['torrent']
 
     click.secho("%-3s  %-60s    %-20s    %-20s    %s  " % ("#", "NAME", "AGE", "SIZE", "SEED / LEECH"), bold=True, fg="white", reverse=True)
 
-    for torrent in data:
+    count = 0
+    for torrent in torrents:
         count += 1
         name = torrent['name']
         age = torrent['age']
@@ -28,7 +29,8 @@ def print_data(data):
         leech = torrent['leech']
 
         click.secho("%-3s" % str(count), nl=False, fg=colors().COUNT, bold=True)
-        click.secho('  %-60s' % cap(name, 60), nl=False, fg=colors().NAME)
+        click.secho("%s" % '»' if torrent['verified'] == '1' else ' ', nl=False)
+        click.secho(' %-60s' % cap(name, 60), nl=False, fg=colors().NAME)
         click.secho('    %-20s' % age, nl=False, fg=colors().AGE)
         click.secho('    %-20s' % size, nl=False, fg=colors().SIZE)
         click.secho('     %-7s' % seed, nl=False, fg=colors().SEED)
@@ -36,7 +38,8 @@ def print_data(data):
 
 def search_basic():
     search = click.prompt('Enter Search Query')
-    print( ktorrent.search(search=search) )
+    data = json.loads( ktorrent.search(search=search) )
+    print_data( data )
 
 def search_adv():
     pass
