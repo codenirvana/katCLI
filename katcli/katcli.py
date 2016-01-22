@@ -15,9 +15,13 @@ def cap(s, l):
     return s if len(s)<=l else s[0:l-3]+'...'
 
 def print_data(raw_data):
+    if raw_data == "Nothing found":
+        click.secho("%s" % 'Nothing found!', fg='red', bold=True)
+        return
+
     torrents = raw_data['torrent']
 
-    click.secho("%-3s  %-60s    %-20s    %-20s    %s  " % ("#", "NAME", "AGE", "SIZE", "SEED / LEECH"), bold=True, fg="white", reverse=True)
+    click.secho("%-3s  %-60s    %-10s    %-10s    %s  " % ("#", "NAME", "AGE", "SIZE", "SEED   LEECH"), bold=True, fg="white", reverse=True)
 
     count = 0
     for torrent in torrents:
@@ -31,9 +35,9 @@ def print_data(raw_data):
         click.secho("%-3s" % str(count), nl=False, fg=colors().COUNT, bold=True)
         click.secho("%s" % '»' if torrent['verified'] == '1' else ' ', nl=False)
         click.secho(' %-60s' % cap(name, 60), nl=False, fg=colors().NAME)
-        click.secho('    %-20s' % age, nl=False, fg=colors().AGE)
-        click.secho('    %-20s' % size, nl=False, fg=colors().SIZE)
-        click.secho('     %-7s' % seed, nl=False, fg=colors().SEED)
+        click.secho('    %-10s' % age, nl=False, fg=colors().AGE)
+        click.secho('    %-10s' % size, nl=False, fg=colors().SIZE)
+        click.secho('    %-7s' % seed, nl=False, fg=colors().SEED)
         click.secho('%s' % leech, fg=colors().LEECH)
 
 def search_basic():
