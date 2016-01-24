@@ -49,7 +49,9 @@ def search_adv():
     pass
 
 def top_basic():
-    pass
+   category = click.prompt('Enter Category')
+   data = json.loads( ktorrent.top(category=category) )
+   print_data( data )
 
 def top_adv():
     pass
@@ -67,7 +69,7 @@ def main(search, top, adv):
     elif search:
         search_adv() if adv else search_basic()
     elif top:
-        top_adv if adv else top_basic
+        top_adv() if adv else top_basic()
     else:
        print("Function argument missing")
 
