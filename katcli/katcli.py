@@ -41,8 +41,53 @@ def print_data(raw_data):
         click.secho('%s' % leech, fg=colors().LEECH)
 
 def get_params(**params):
-    print( type(params) )
-    exit()
+    click.secho("%s" % 'Search type', fg='red', bold=True)
+    strict = click.prompt(' -1: fuzzy\n  0: normal\n 1: strict\n')
+    if strict.isdigit() and int(strict) in range(-1,2):
+        params['strict'] = int(strict)
+
+    click.secho("%s" % 'Safe search ON', fg='red', bold=True)
+    safe = click.prompt('0 or 1')
+    if safe.isdigit() and int(safe) in range(0,2):
+        params['safe'] = int(safe)
+
+    click.secho("%s" % 'Only verified torrent', fg='red', bold=True)
+    verified = click.prompt('0 or 1')
+    if verified.isdigit() and int(verified) in range(0,2):
+        params['verified'] = int(verified)
+
+    click.secho("%s" % 'Want to subtract some words from torrent name', fg='red', bold=True)
+    yn_opt = click.prompt('y / n')
+    if yn_opt == "y":
+        subtract = click.prompt('Enter words to subtract')
+        params['subtract'] = subtract
+
+    click.secho("%s" % 'Uploads by certain user', fg='red', bold=True)
+    yn_opt = click.prompt('y / n')
+    if yn_opt == 'y':
+        user = click.prompt('Enter username')
+        params['user'] = user
+
+    click.secho("%s" % 'Change torrents category', fg='red', bold=True)
+    yn_opt = click.prompt('y / n')
+    if yn_opt == 'y':
+        category = click.prompt('Enter category')
+        params['category'] = category
+
+    click.secho("%s" % 'Sort result', fg='red', bold=True)
+    yn_opt = click.prompt('y / n')
+    if yn_opt == 'y':
+        field = click.prompt('Enter field to sort')
+        sorder = click.prompt('sorting order (asc/desc)')
+        params['field'] = field
+        params['sorder'] = sorder
+
+    click.secho("%s" % 'Page Number', fg='red', bold=True)
+    page = click.prompt('Enter page numer')
+    if page.isdigit() and int(page) > 0:
+        params['page'] = int(page)
+
+    return params
 
 def search_results(adv):
 
