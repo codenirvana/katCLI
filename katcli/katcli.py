@@ -40,21 +40,37 @@ def print_data(raw_data):
         click.secho('    %-7s' % seed, nl=False, fg=colors().SEED)
         click.secho('%s' % leech, fg=colors().LEECH)
 
-def search_basic():
+def get_params(**params):
+    print( type(params) )
+    exit()
+
+def search_results(adv):
+
     search = click.prompt('Enter Search Query')
-    data = json.loads( ktorrent.search(search=search) )
+
+    params = {
+        'search':   search,
+        'strict':   0,
+        'safe':     0,
+        'verified': 0,
+        'subtract': '',
+        'user':     '',
+        'category': 'all',
+        'field':    'seed',
+        'sorder':   'desc',
+        'page':     1
+    }
+
+    if adv:
+        params = get_params(**params)
+
+    data = json.loads( ktorrent.search(**params) )
     print_data( data )
 
-def search_adv():
-    pass
-
-def top_basic():
+def top_results(adv):
    category = click.prompt('Enter Category')
    data = json.loads( ktorrent.top(category=category) )
    print_data( data )
-
-def top_adv():
-    pass
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -67,9 +83,9 @@ def main(search, top, adv):
     if search and top:
         print("Choose only one function")
     elif search:
-        search_adv() if adv else search_basic()
+        search_results(adv)
     elif top:
-        top_adv() if adv else top_basic()
+        top_results(adv)
     else:
        print("Function argument missing")
 
