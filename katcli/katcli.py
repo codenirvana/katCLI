@@ -14,12 +14,20 @@ def colors():
 def cap(s, l):
     return s if len(s)<=l else s[0:l-3]+'...'
 
-def print_data(raw_data):
-    if raw_data == "Nothing found":
-        click.secho("%s" % 'Nothing found!', fg='red', bold=True)
-        return
+def check_status(status):
+    if status == 200:
+        return True
+    elif status == 400:
+        msg = 'Invalid arguments passed!'
+    elif status == 404:
+        msg = 'Nothing Found!'
+    elif status == 408:
+        msg = 'Connection error!'
 
-    torrents = raw_data['torrent']
+    click.secho("%s" % msg, fg='red', bold=True)
+    return False
+
+def print_data(torrents):
 
     click.secho("%-3s  %-60s    %-10s    %-10s    %s  " % ("#", "NAME", "AGE", "SIZE", "SEED   LEECH"), bold=True, fg="white", reverse=True)
 
@@ -41,40 +49,40 @@ def print_data(raw_data):
         click.secho('%s' % leech, fg=colors().LEECH)
 
 def get_params(**params):
-    click.secho("%s" % 'Search type', fg='red', bold=True)
+    click.secho("%s" % 'Search type', fg='blue')
     strict = click.prompt(' -1: fuzzy\n  0: normal\n 1: strict\n')
     if strict.isdigit() and int(strict) in range(-1,2):
         params['strict'] = int(strict)
 
-    click.secho("%s" % 'Safe search ON', fg='red', bold=True)
+    click.secho("%s" % 'Safe search ON', fg='blue')
     safe = click.prompt('0 or 1')
     if safe.isdigit() and int(safe) in range(0,2):
         params['safe'] = int(safe)
 
-    click.secho("%s" % 'Only verified torrent', fg='red', bold=True)
+    click.secho("%s" % 'Only verified torrent', fg='blue')
     verified = click.prompt('0 or 1')
     if verified.isdigit() and int(verified) in range(0,2):
         params['verified'] = int(verified)
 
-    click.secho("%s" % 'Want to subtract some words from torrent name', fg='red', bold=True)
+    click.secho("%s" % 'Want to subtract some words from torrent name', fg='blue')
     yn_opt = click.prompt('y / n')
     if yn_opt == "y":
         subtract = click.prompt('Enter words to subtract')
         params['subtract'] = subtract
 
-    click.secho("%s" % 'Uploads by certain user', fg='red', bold=True)
+    click.secho("%s" % 'Uploads by certain user', fg='blue')
     yn_opt = click.prompt('y / n')
     if yn_opt == 'y':
         user = click.prompt('Enter username')
         params['user'] = user
 
-    click.secho("%s" % 'Change torrents category', fg='red', bold=True)
+    click.secho("%s" % 'Change torrents category', fg='blue')
     yn_opt = click.prompt('y / n')
     if yn_opt == 'y':
         category = click.prompt('Enter category')
         params['category'] = category
 
-    click.secho("%s" % 'Sort result', fg='red', bold=True)
+    click.secho("%s" % 'Sort result', fg='blue')
     yn_opt = click.prompt('y / n')
     if yn_opt == 'y':
         field = click.prompt('Enter field to sort')
@@ -82,7 +90,7 @@ def get_params(**params):
         params['field'] = field
         params['sorder'] = sorder
 
-    click.secho("%s" % 'Page Number', fg='red', bold=True)
+    click.secho("%s" % 'Page Number', fg='blue')
     page = click.prompt('Enter page numer')
     if page.isdigit() and int(page) > 0:
         params['page'] = int(page)
@@ -110,7 +118,9 @@ def search_results(adv):
         params = get_params(**params)
 
     data = json.loads( ktorrent.search(**params) )
-    print_data( data )
+
+    if check_status( data['status'] ):
+        print_data( data['torrent'] )
 
 def top_results(adv):
    category = click.prompt('Enter Category')
@@ -126,12 +136,12 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 def main(search, top, adv):
     """katCLI"""
     if search and top:
-        print("Choose only one function")
+        click.secho("%s" % "Choose only one function", fg='red', bold=True)
     elif search:
         search_results(adv)
     elif top:
         top_results(adv)
     else:
-       print("Function argument missing")
+        click.secho("%s" % "Function argument missing", fg='red', bold=True)
 
 if __name__ == "__main__": main()
