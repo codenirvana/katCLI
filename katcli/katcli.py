@@ -124,8 +124,17 @@ def search_results(adv):
 
 def top_results(adv):
    category = click.prompt('Enter Category')
-   data = json.loads( ktorrent.top(category=category) )
-   print_data( data )
+
+   page = 1
+   if adv:
+       page = click.prompt('Enter Page')
+       if page.isdigit() and int(page) > 0:
+            page = int(page)
+
+   data = json.loads( ktorrent.top(category=category, page=page) )
+
+   if check_status( data['status'] ):
+       print_data( data['torrent'] )
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
