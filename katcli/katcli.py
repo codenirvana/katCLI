@@ -29,7 +29,7 @@ def check_status(status):
 
 def print_data(torrents):
 
-    click.secho("%-3s  %-60s    %-10s    %-10s    %s  " % ("#", "NAME", "AGE", "SIZE", "SEED   LEECH"), bold=True, fg="white", reverse=True)
+    click.secho(" %-3s  %-60s  %-9s  %-10s  %s " % ("#", "NAME", "AGE", "SIZE", "SEED   LEECH"), bold=True, fg="white", reverse=True)
 
     count = 0
     for torrent in torrents:
@@ -40,12 +40,12 @@ def print_data(torrents):
         seed = torrent['seed']
         leech = torrent['leech']
 
-        click.secho("%-3s" % str(count), nl=False, fg=colors().COUNT, bold=True)
+        click.secho(" %-3s" % str(count), nl=False, fg=colors().COUNT, bold=True)
         click.secho("%s" % '»' if torrent['verified'] == '1' else ' ', nl=False)
         click.secho(' %-60s' % cap(name, 60), nl=False, fg=colors().NAME)
-        click.secho('    %-10s' % age, nl=False, fg=colors().AGE)
-        click.secho('    %-10s' % size, nl=False, fg=colors().SIZE)
-        click.secho('    %-7s' % seed, nl=False, fg=colors().SEED)
+        click.secho('  %-9s' % age, nl=False, fg=colors().AGE)
+        click.secho('  %-10s' % size, nl=False, fg=colors().SIZE)
+        click.secho('  %-7s' % seed, nl=False, fg=colors().SEED)
         click.secho('%s' % leech, fg=colors().LEECH)
 
 def get_params(**params):
