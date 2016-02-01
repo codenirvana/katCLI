@@ -1,4 +1,4 @@
-import click, ktorrent, json
+import click, ktorrent, json, webbrowser
 
 def colors():
   enums = dict(
@@ -47,6 +47,31 @@ def print_data(torrents):
         click.secho('  %-10s' % size, nl=False, fg=colors().SIZE)
         click.secho('  %-7s' % seed, nl=False, fg=colors().SEED)
         click.secho('%s' % leech, fg=colors().LEECH)
+
+    while 1:
+        opt = result_options(torrents)
+        if opt == 0:
+            break
+
+def result_options(torrents):
+    click.secho("\n%s" % '1 : Open in browser\t 2 : Download Torrent\t 0 : Exit', fg='red', bold=True)
+    opt = click.prompt('> ')
+    if opt == '1':
+        tID = click.prompt('Torrent ID')
+        if tID.isdigit() and int(tID) in range(1,len(torrents)+1):
+            tID = int(tID) - 1
+        else:
+            click.secho("%s" % "Invalid ID!", fg='red', bold=True)
+            return 0
+
+        url = torrents[tID]['web']
+        webbrowser.open_new_tab(url)
+    elif opt == '2':
+        pass
+    else:
+        return 0
+
+    return 1
 
 def get_params(**params):
     click.secho("%s" % 'Search type', fg='blue')
