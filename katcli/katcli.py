@@ -56,7 +56,7 @@ def print_data(torrents):
 def result_options(torrents):
     click.secho("\n%s" % '1 : Open in browser\t 2 : Download Torrent\t 0 : Exit', fg='red', bold=True)
     opt = click.prompt('> ')
-    if opt == '1':
+    if opt == '1' or opt == '2':
         tID = click.prompt('Torrent ID')
         if tID.isdigit() and int(tID) in range(1,len(torrents)+1):
             tID = int(tID) - 1
@@ -64,10 +64,12 @@ def result_options(torrents):
             click.secho("%s" % "Invalid ID!", fg='red', bold=True)
             return 0
 
-        url = torrents[tID]['web']
-        webbrowser.open_new_tab(url)
-    elif opt == '2':
-        pass
+        if opt == '1':
+            url = torrents[tID]['web']
+            webbrowser.open_new_tab(url)
+        elif opt == '2':
+            link = torrents[tID]['link']
+            webbrowser.open_new_tab(link)
     else:
         return 0
 
