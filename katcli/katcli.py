@@ -170,7 +170,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.option('-t', '--top', is_flag=True, help='Top Torrent')
 @click.option('-a', '--adv', is_flag=True, help='Advance Options')
 def main(search, top, adv):
-    """katCLI"""
+    """katCLI - KAT Command line interface"""
     if search and top:
         click.secho("%s" % "Choose only one function", fg='red', bold=True)
     elif search:
