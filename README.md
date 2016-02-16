@@ -1,5 +1,9 @@
 katCLI
 =====
+[![version](https://img.shields.io/pypi/status/katcli.svg)](https://pypi.python.org/pypi/katcli/)
+[![version](https://img.shields.io/pypi/v/katcli.svg)](https://pypi.python.org/pypi/katcli/)
+[![supported](https://img.shields.io/pypi/pyversions/katcli.svg)](https://pypi.python.org/pypi/katcli/)
+
 KAT Command line interface
 
 Install
