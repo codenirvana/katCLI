@@ -22,3 +22,8 @@ $ git clone https://github.com/codenirvana/katCLI.git
 $ cd katCLI
 $ python setup.py install
 ```
+
+
+TODO
+====
+- [ ] More user options
