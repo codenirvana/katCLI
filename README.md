@@ -27,3 +27,4 @@ $ python setup.py install
 TODO
 ====
 - [ ] More user options
+- [ ] README docs
