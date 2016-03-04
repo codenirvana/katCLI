@@ -27,4 +27,5 @@ $ python setup.py install
 TODO
 ====
 - [ ] More user options
+- [ ] Tests
 - [ ] README docs
