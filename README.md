@@ -29,3 +29,4 @@ TODO
 - [ ] More user options
 - [ ] Tests
 - [ ] README docs
+- [ ] Fix output colors
