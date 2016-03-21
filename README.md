@@ -9,7 +9,7 @@ KAT Command line interface
 Install
 =====
 
-### Using `pip`
+### Using pip
 
 ```bash
 $ pip install katcli
