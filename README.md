@@ -1,3 +1,7 @@
+```
+On 20 July 2016, KAT domain was seized by the United States government and is offline
+```
+
 katCLI
 =====
 [![version](https://img.shields.io/pypi/status/katcli.svg)](https://pypi.python.org/pypi/katcli/)
